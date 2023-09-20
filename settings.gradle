@@ -1,0 +1,18 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        //https://github.com/BlacKCaT27/CurrencyEditText
+        maven { url "https://jitpack.io" }
+    }
+}
+rootProject.name = "BancoDigital"
+include ':app'

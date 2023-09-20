@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BancoDigital</string>
+    <string name="text_valor">R$ %1$s</string>
+    <string name="text_enviada_por">Enviada por %1$s</string>
+</resources>
