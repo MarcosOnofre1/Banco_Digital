@@ -15,6 +15,21 @@
         android:theme="@style/Theme.BancoDigital"
         tools:targetApi="31">
         <activity
+            android:name=".cobrar.ReciboPagamentoActivity"
+            android:exported="false"
+            android:theme="@style/Base.Theme.BancoDigital3"/>
+        <activity
+            android:name=".cobrar.PagarCobrancaActivity"
+            android:exported="false"
+            android:theme="@style/Base.Theme.BancoDigital3"/>
+        <activity
+            android:name=".cobrar.CobrancaConfirmaActivity"
+            android:exported="false"
+            android:theme="@style/Base.Theme.BancoDigital3"/>
+        <activity
+            android:name=".cobrar.CobrarFormActivity"
+            android:exported="false" />
+        <activity
             android:name=".notificacoes.NotificacoesActivity"
             android:exported="false" />
         <activity
@@ -22,19 +37,22 @@
             android:exported="false" />
         <activity
             android:name=".transferencia.TransferenciaReciboActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Base.Theme.BancoDigital3"/>
         <activity
             android:name=".transferencia.TransferenciaConfirmaActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
-            android:name=".transferencia.TransferirUsuarioActivity"
-            android:exported="false" />
+            android:name=".transferencia.SelecionarUsuarioActivity"
+            android:exported="false"
+            android:theme="@style/Base.Theme.BancoDigital3"/>
         <activity
             android:name=".transferencia.TransferenciaFormActivity"
             android:exported="false" />
         <activity
             android:name=".recarga.RecargaReciboActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Base.Theme.BancoDigital3"/>
         <activity
             android:name=".recarga.RecargaFormActivity"
             android:exported="false" />
@@ -44,7 +62,8 @@
             android:theme="@style/Base.Theme.BancoDigital2" />
         <activity
             android:name=".deposito.DepositoReciboActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Base.Theme.BancoDigital3"/>
         <activity
             android:name=".deposito.DepositoFormActivity"
             android:exported="false" />

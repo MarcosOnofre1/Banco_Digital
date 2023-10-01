@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.bancodigital.R;
 import com.example.bancodigital.adapter.ExtratoAdapter;
 import com.example.bancodigital.autenticacao.LoginActivity;
+import com.example.bancodigital.cobrar.CobrarFormActivity;
 import com.example.bancodigital.deposito.DepositoFormActivity;
 import com.example.bancodigital.extrato.ExtratoActivity;
 import com.example.bancodigital.helper.FirebaseHelper;
@@ -215,49 +216,47 @@ public class MainActivity extends AppCompatActivity {
 
     // quando clicado no card do depositar, vai entrar na tela DepositoFormActivity
     private void configCliques() {
-        findViewById(R.id.cardDeposito).setOnClickListener(v -> {
-            startActivity(new Intent(this, DepositoFormActivity.class));
-        });
+        findViewById(R.id.cardDeposito).setOnClickListener(v -> redirecionaUsuario(DepositoFormActivity.class));
 
-        //aqui vai ser o click para entrar no perfil do usuario, caso clicar antes de carregar, aparecerá um toast
-        imagemPerfil.setOnClickListener(v -> {
-            if (usuario != null) {
-                Intent intent = new Intent(this, MinhaContaActivity.class);
-                intent.putExtra("usuario", usuario);
-                startActivity(intent);
+        imagemPerfil.setOnClickListener(v ->  perfilUsuario());
 
-            } else {
-                Toast.makeText(this, "Ainda estamos recuperando as informações", Toast.LENGTH_SHORT).show();
-            }
-        });
+        findViewById(R.id.cardRecarga).setOnClickListener(v -> redirecionaUsuario(RecargaFormActivity.class));
 
-        findViewById(R.id.cardRecarga).setOnClickListener(v -> {
-            startActivity(new Intent(this, RecargaFormActivity.class));
-        });
-
-        findViewById(R.id.cardTransferir).setOnClickListener(v -> {
-            startActivity(new Intent(this, TransferenciaFormActivity.class));
-        });
+        findViewById(R.id.cardTransferir).setOnClickListener(v -> redirecionaUsuario(TransferenciaFormActivity.class));
 
         findViewById(R.id.cardDeslogar).setOnClickListener(v -> {
+            FirebaseHelper.getAuth().signOut();
+            finish();
             startActivity(new Intent(this, LoginActivity.class));
         });
 
-        findViewById(R.id.cardExtrato).setOnClickListener(v -> {
-            verTodosMovimentos();
-        });
+        findViewById(R.id.cardExtrato).setOnClickListener(v -> redirecionaUsuario(ExtratoActivity.class));
 
-        findViewById(R.id.textVerTodas).setOnClickListener(v -> {
-            verTodosMovimentos();
-        });
+        findViewById(R.id.textVerTodas).setOnClickListener(v -> redirecionaUsuario(ExtratoActivity.class));
 
-        findViewById(R.id.btnNotificacao).setOnClickListener(v -> {
-            startActivity(new Intent(this, NotificacoesActivity.class));
-        });
+        findViewById(R.id.btnNotificacao).setOnClickListener(v -> redirecionaUsuario(NotificacoesActivity.class));
+
+        findViewById(R.id.cardReceber).setOnClickListener(v -> redirecionaUsuario(CobrarFormActivity.class));
+
+        findViewById(R.id.cardMinhaConta).setOnClickListener(v ->  perfilUsuario());
     }
 
-    private void verTodosMovimentos() {
-        startActivity(new Intent(this, ExtratoActivity.class));
+    private void perfilUsuario(){
+        if (usuario != null) {
+            Intent intent = new Intent(this, MinhaContaActivity.class);
+            intent.putExtra("usuario", usuario);
+            startActivity(intent);
+
+        } else {
+            Toast.makeText(this, "Ainda estamos recuperando as informações", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //Lembrando que nao da pra colocar o nome do parametro "Class" de "class", justamente porq esse parametro Class é um nome
+    // reservado da linguaguem Java, por isso a mudança de class pra -> clazz.
+    private void redirecionaUsuario(Class clazz){
+        startActivity(new Intent(this, clazz));
+
     }
 
     private void iniciaComponentes() {

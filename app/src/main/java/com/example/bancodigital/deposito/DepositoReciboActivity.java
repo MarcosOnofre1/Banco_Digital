@@ -80,6 +80,7 @@ public class DepositoReciboActivity extends AppCompatActivity {
         textData = findViewById(R.id.textData);
         textValor = findViewById(R.id.textValor);
 
+
     }
 
 }

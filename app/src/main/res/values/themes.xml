@@ -17,6 +17,15 @@
 
     </style>
 
+    <style name="Base.Theme.BancoDigital3" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@android:color/white</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/color_White</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+    </style>
+
     <style name="Theme.EditText" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">@color/color_White</item>
     </style>

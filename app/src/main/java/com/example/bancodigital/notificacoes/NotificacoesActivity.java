@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
@@ -14,8 +15,10 @@ import android.widget.TextView;
 
 import com.example.bancodigital.R;
 import com.example.bancodigital.adapter.NotificacaoAdapter;
+import com.example.bancodigital.cobrar.PagarCobrancaActivity;
 import com.example.bancodigital.helper.FirebaseHelper;
 import com.example.bancodigital.model.Notificacao;
+import com.example.bancodigital.transferencia.TransferenciaReciboActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -105,5 +108,16 @@ public class NotificacoesActivity extends AppCompatActivity implements Notificac
     @Override
     public void OnclickListener(Notificacao notificacao) {
 
+        if (notificacao.getOperacao().equals("COBRANCA")){
+            Intent intent = new Intent(this, PagarCobrancaActivity.class);
+            intent.putExtra("notificacao", notificacao);
+            startActivity(intent);
+        }else if (notificacao.getOperacao().equals("TRANSFERENCIA")){
+            Intent intent = new Intent(this, TransferenciaReciboActivity.class);
+            intent.putExtra("idtransferencia", notificacao.getIdOperacao());
+            startActivity(intent);
+        }else {
+
+        }
     }
 }

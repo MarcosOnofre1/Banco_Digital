@@ -4,9 +4,10 @@ import com.example.bancodigital.helper.FirebaseHelper;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ServerValue;
 
+import java.io.Serializable;
 import java.net.PortUnreachableException;
 
-public class Notificacao {
+public class Notificacao implements Serializable {
 
     private String id;
     private String idEmitente;

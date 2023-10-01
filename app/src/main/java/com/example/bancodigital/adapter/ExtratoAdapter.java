@@ -18,8 +18,8 @@ import java.util.List;
 public class ExtratoAdapter extends RecyclerView.Adapter<ExtratoAdapter.MyViewHolder> {
 
 
-    private List<Extrato> extratoList;
-    private Context context;
+    private final List<Extrato> extratoList;
+    private final Context context;
 
     public ExtratoAdapter(List<Extrato> extratoList, Context context) {
         this.extratoList = extratoList;
@@ -55,8 +55,8 @@ public class ExtratoAdapter extends RecyclerView.Adapter<ExtratoAdapter.MyViewHo
             case "RECARGA":
                 holder.textIcon.setBackgroundResource(R.drawable.bg_saida);
                 break;
-            // VAI TER UMA CORREÇÃO AQUI MAIS PRA FRENTE
             case "TRANSFERENCIA":
+            case "PAGAMENTO":
                 if (extrato.getTipo().equals("ENTRADA")) {
                     holder.textIcon.setBackgroundResource(R.drawable.bg_entrada);
                 } else {

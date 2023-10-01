@@ -198,7 +198,7 @@ public class TransferenciaConfirmaActivity extends AppCompatActivity {
         usuarioDestino = (Usuario) getIntent().getSerializableExtra("usuario");
         transferencia = (Transferencia) getIntent().getSerializableExtra("transferencia");
 
-        // reucpera o nome e a imagem do usuario
+        // recupera o nome e a imagem do usuario
         textUsuario.setText(usuarioDestino.getNome());
         if (usuarioDestino.getUrlImagem() != null){
             Picasso.get().load(usuarioDestino.getUrlImagem())

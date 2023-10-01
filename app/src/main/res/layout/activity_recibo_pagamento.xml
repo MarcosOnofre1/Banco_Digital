@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".deposito.DepositoReciboActivity"
-    android:background="@color/color_White">
+    tools:context=".cobrar.ReciboPagamentoActivity">
 
 
     <include
@@ -34,7 +33,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Depósito efetuado \ncom sucesso!"
+                android:text="Pagamento efetuado \ncom sucesso!"
                 android:textAlignment="center"
                 android:textColor="@color/colorRecibo"
                 android:textSize="24sp"
@@ -42,27 +41,50 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView4"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_margin="24dp"
+                app:cardCornerRadius="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+                <ImageView
+                    android:id="@+id/imagemUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/ic_user" />
+
+
+            </androidx.cardview.widget.CardView>
+
             <TextView
-                android:id="@+id/textView5"
+
+                android:id="@+id/textUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Seu depósito ficará disponivel em até 3 dias úteis."
                 android:textAlignment="center"
+                android:textColor="@color/colorText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                app:layout_constraintTop_toBottomOf="@+id/cardView4"
+                tools:text="Marcos Onofre" />
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="Código da Transação"
                 android:textAlignment="center"
+                android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.666"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                app:layout_constraintTop_toBottomOf="@+id/textUsuario" />
 
             <TextView
                 android:id="@+id/textCodigo"
@@ -129,7 +151,7 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/btnOkDeposito"
+        android:id="@+id/btnOk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_btn"
@@ -141,5 +163,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

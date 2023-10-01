@@ -18,7 +18,9 @@ import android.widget.TextView;
 
 import com.example.bancodigital.R;
 import com.example.bancodigital.adapter.UsuarioAdapter;
+import com.example.bancodigital.cobrar.CobrancaConfirmaActivity;
 import com.example.bancodigital.helper.FirebaseHelper;
+import com.example.bancodigital.model.Cobranca;
 import com.example.bancodigital.model.Transferencia;
 import com.example.bancodigital.model.Usuario;
 import com.google.firebase.database.DataSnapshot;
@@ -26,12 +28,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransferirUsuarioActivity extends AppCompatActivity implements UsuarioAdapter.OnClick {
+public class SelecionarUsuarioActivity extends AppCompatActivity implements UsuarioAdapter.OnClick {
 
     private UsuarioAdapter usuarioAdapter;
     private final List<Usuario> usuarioList = new ArrayList<>();
@@ -44,17 +44,16 @@ public class TransferirUsuarioActivity extends AppCompatActivity implements Usua
     private String pesquisa = "";
     private LinearLayout llPesquisa;
 
-
     private TextView textInfo;
     private ProgressBar progressBar;
-
     private Transferencia transferencia;
+    private Cobranca cobranca;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transferir_usuario);
+        setContentView(R.layout.activity_selecionar_usuario);
 
         configToolbar();
 
@@ -68,12 +67,16 @@ public class TransferirUsuarioActivity extends AppCompatActivity implements Usua
 
         configCliques();
 
-        recuperaTransferencia();
+        getExtra();
 
     }
 
-    private void recuperaTransferencia(){
-        transferencia = (Transferencia) getIntent().getSerializableExtra("transferencia");
+    private void getExtra(){
+        if (getIntent().hasExtra("transferencia")){
+            transferencia = (Transferencia) getIntent().getSerializableExtra("transferencia");
+        }else if (getIntent().hasExtra("cobranca")){
+            cobranca = (Cobranca) getIntent().getSerializableExtra("cobranca");
+        }
     }
 
     private void configCliques(){
@@ -222,11 +225,23 @@ public class TransferirUsuarioActivity extends AppCompatActivity implements Usua
     @Override
     public void OnclickListener(Usuario usuario) {
 
-        transferencia.setIdUserDestino(usuario.getId());
+        String idUsuario = usuario.getId();
 
-        Intent intent = new Intent(this, TransferenciaConfirmaActivity.class);
-        intent.putExtra("usuario", usuario);
-        intent.putExtra("transferencia", transferencia);
-        startActivity(intent);
+        if (transferencia != null){
+
+            transferencia.setIdUserDestino(idUsuario);
+            Intent intent = new Intent(this, TransferenciaConfirmaActivity.class);
+            intent.putExtra("transference", transferencia);
+            intent.putExtra("usuario", usuario);
+            startActivity(intent);
+
+        }else if (cobranca != null){
+
+            cobranca.setIdDestinatario(idUsuario);
+            Intent intent = new Intent(this, CobrancaConfirmaActivity.class);
+            intent.putExtra("cobranca", cobranca);
+            intent.putExtra("usuario", usuario);
+            startActivity(intent);
+        }
     }
 }
