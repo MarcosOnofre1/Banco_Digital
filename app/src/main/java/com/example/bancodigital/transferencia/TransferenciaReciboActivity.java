@@ -64,7 +64,7 @@ public class TransferenciaReciboActivity extends AppCompatActivity {
         DatabaseReference transferenciaRef = FirebaseHelper.getDatabaseReference()
                 .child("transferencias")
                 .child(idTransferencia);
-        transferenciaRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        transferenciaRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Transferencia transferencia = snapshot.getValue(Transferencia.class);

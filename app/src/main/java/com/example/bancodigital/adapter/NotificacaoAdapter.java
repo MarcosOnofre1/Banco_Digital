@@ -49,13 +49,13 @@ public class NotificacaoAdapter extends RecyclerView.Adapter<NotificacaoAdapter.
         String titulo = "";
         switch (notificacao.getOperacao()) {
             case "COBRANCA":
-                titulo = "Você recebeu uma cobrança.";
+                titulo = "Você recebeu uma cobrança";
                 break;
             case "TRANSFERENCIA":
-                titulo = "Você recebeu uma transferência.";
+                titulo = "Você recebeu uma transferência";
                 break;
             case "PAGAMENTO":
-                titulo = "Você recebeu um pagamento.";
+                titulo = "Você recebeu um pagamento";
                 break;
         }
 
@@ -88,8 +88,6 @@ public class NotificacaoAdapter extends RecyclerView.Adapter<NotificacaoAdapter.
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Usuario usuario = snapshot.getValue(Usuario.class);
                 if (usuario != null){
-                    holder.textEmitente.setText(context.getString(R.string.text_enviada_por, usuario.getNome()));
-
 
                     switch (notificacao.getOperacao()) {
                         case "COBRANCA":

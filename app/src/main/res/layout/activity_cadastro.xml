@@ -69,15 +69,18 @@
                 android:hint="Telefone"
                 android:textColorHint="@color/colorTextHint">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.santalu.maskara.widget.MaskEditText
                     android:id="@+id/edtTelefone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_celular_login"
                     android:drawablePadding="16dp"
-                    android:inputType="number"
                     android:backgroundTint="@color/colorPrimary"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:inputType="number"
+                    app:mask="(__) _____-____"
+                    app:maskCharacter="_"
+                    app:maskStyle="completable" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

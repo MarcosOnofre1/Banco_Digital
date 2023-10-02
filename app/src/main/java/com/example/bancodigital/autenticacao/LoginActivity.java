@@ -2,9 +2,11 @@ package com.example.bancodigital.autenticacao;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -39,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         if(!email.isEmpty()){
             if(!senha.isEmpty()){
 
+                ocutarTeclado();
                 progressBar.setVisibility(View.VISIBLE);
 
                 //*esse seria o metodo*
@@ -90,4 +93,10 @@ public class LoginActivity extends AppCompatActivity {
         edtSenha = findViewById(R.id.edtSenha);
         progressBar = findViewById(R.id.progressBar);
     };
+
+    // ocutar teclado do dispositivo
+    private void ocutarTeclado() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(edtEmail.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
 }

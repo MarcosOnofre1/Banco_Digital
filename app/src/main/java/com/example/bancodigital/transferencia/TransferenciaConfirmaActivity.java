@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -206,7 +207,8 @@ public class TransferenciaConfirmaActivity extends AppCompatActivity {
                     .into(imagemUsuario);
         }
 
-        textValor.setText(getString(R.string.text_valor, GetMask.getValor(transferencia.getValor())));
+        Log.i("INFOTESTE", "configDados: " + transferencia.getValor());
+        //textValor.setText(getString(R.string.text_valor, GetMask.getValor(transferencia.getValor())));
     }
 
     private void configToolbar() {
