@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Deseja remover a notificação?" />
+        android:text="Deseja remover a notificação?" />
 
     <TextView
         android:id="@+id/textMensagem"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:textAlignment="center"
-        tools:text="Aperte SIM para remover essa notificação ou clique em FECHAR para cancelar."
+        android:text="Aperte SIM para remover essa notificação ou clique em FECHAR para cancelar."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textTitulo" />
