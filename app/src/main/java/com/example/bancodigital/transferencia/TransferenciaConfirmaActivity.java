@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -31,8 +30,6 @@ public class TransferenciaConfirmaActivity extends AppCompatActivity {
     private TextView textValor;
     private TextView textUsuario;
     private ImageView imagemUsuario;
-
-    private Usuario usuario;
     private Usuario usuarioDestino;
     private Usuario usuarioOrigem;
     private Transferencia transferencia;
@@ -44,35 +41,38 @@ public class TransferenciaConfirmaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transferencia_confirma);
 
-        iniciaComponentes();
-
         configToolbar();
+
+        iniciaComponentes();
 
         configDados();
 
         recuperaUsuarioOrigem();
 
-
     }
 
-    private void recuperaUsuarioOrigem(){
-        DatabaseReference usuarioRef = FirebaseHelper.getDatabaseReference()
-                .child("usuarios")
-                .child(transferencia.getIdUserOrigem());
-        usuarioRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                usuarioOrigem = snapshot.getValue(Usuario.class);
-            }
+    private void recuperaUsuarioOrigem() {
+        if (transferencia != null && transferencia.getIdUserOrigem() != null) {
+            DatabaseReference usuarioRef = FirebaseHelper.getDatabaseReference()
+                    .child("usuarios")
+                    .child(transferencia.getIdUserOrigem());
+            usuarioRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    usuarioOrigem = snapshot.getValue(Usuario.class);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 
-    private void enviaNotificacao(String idOperacao){
+
+    private void enviaNotificacao(String idOperacao) {
         Notificacao notificacao = new Notificacao();
         notificacao.setOperacao("TRANSFERENCIA");
         notificacao.setIdDestinario(usuarioDestino.getId());
@@ -83,10 +83,10 @@ public class TransferenciaConfirmaActivity extends AppCompatActivity {
     }
 
     // AQUI VALIDA SE SEM OU NAO SALDO NA CONTA DO USUARIO
-    public void confirmaTransferencia(View view){
+    public void confirmaTransferencia(View view) {
 
-        if (transferencia != null){
-            if (usuarioOrigem.getSaldo() >= transferencia.getValor()){
+        if (transferencia != null) {
+            if (usuarioOrigem.getSaldo() >= transferencia.getValor()) {
 
                 //aqui é onde tira o saldo do usuario de origem e faz a transferencia e atualiza o seu saldo.
                 usuarioOrigem.setSaldo(usuarioOrigem.getSaldo() - transferencia.getValor());
@@ -102,13 +102,13 @@ public class TransferenciaConfirmaActivity extends AppCompatActivity {
                 // Destino
                 salvarExtrato(usuarioDestino, "ENTRADA");
 
-            }else {
+            } else {
                 showDialog("Saldo insuficiente.");
             }
         }
     }
 
-    private void salvarExtrato(Usuario usuario, String tipo){
+    private void salvarExtrato(Usuario usuario, String tipo) {
         Extrato extrato = new Extrato();
         extrato.setOperacao("TRANSFERENCIA");
         extrato.setValor(transferencia.getValor());
@@ -120,7 +120,7 @@ public class TransferenciaConfirmaActivity extends AppCompatActivity {
                 .child(extrato.getId());
 
         extratoRef.setValue(extrato).addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
+            if (task.isSuccessful()) {
 
                 //registra a data do evento quando foi efetuado no firebase
                 DatabaseReference updateExtrato = extratoRef
@@ -129,7 +129,7 @@ public class TransferenciaConfirmaActivity extends AppCompatActivity {
 
                 salvarTransferencia(extrato);
 
-            }else {
+            } else {
                 showDialog("Não foi possível efetuar o deposito, tente mais tarde.");
 
             }
@@ -138,22 +138,21 @@ public class TransferenciaConfirmaActivity extends AppCompatActivity {
 
     }
 
-    private void salvarTransferencia(Extrato extrato){
+    private void salvarTransferencia(Extrato extrato) {
 
         transferencia.setId(extrato.getId());
-
 
         DatabaseReference transferenciaRef = FirebaseHelper.getDatabaseReference()
                 .child("transferencias")
                 .child(transferencia.getId());
         transferenciaRef.setValue(transferencia).addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
+            if (task.isSuccessful()) {
 
                 DatabaseReference updateTransferencia = transferenciaRef
                         .child("data");
                 updateTransferencia.setValue(ServerValue.TIMESTAMP);
 
-                if (extrato.getTipo().equals("ENTRADA")){
+                if (extrato.getTipo().equals("ENTRADA")) {
 
                     enviaNotificacao(extrato.getId());
 
@@ -162,7 +161,7 @@ public class TransferenciaConfirmaActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
-            }else {
+            } else {
                 showDialog("Não foi possível completar a transferencia");
             }
         });
@@ -195,20 +194,25 @@ public class TransferenciaConfirmaActivity extends AppCompatActivity {
 
     }
 
-    private void configDados(){
+    private void configDados() {
+
         usuarioDestino = (Usuario) getIntent().getSerializableExtra("usuario");
         transferencia = (Transferencia) getIntent().getSerializableExtra("transferencia");
 
-        // recupera o nome e a imagem do usuario
         textUsuario.setText(usuarioDestino.getNome());
-        if (usuarioDestino.getUrlImagem() != null){
+        if (usuarioDestino.getUrlImagem() != null) {
             Picasso.get().load(usuarioDestino.getUrlImagem())
-                    .placeholder(R.drawable.drloading)
+                    .placeholder(R.drawable.loading)
                     .into(imagemUsuario);
         }
 
-        Log.i("INFOTESTE", "configDados: " + transferencia.getValor());
-        //textValor.setText(getString(R.string.text_valor, GetMask.getValor(transferencia.getValor())));
+        // Verifica se a transferência não é nula antes de acessar os métodos
+        if (transferencia != null) {
+            // Certifique-se de que o valor retornado por GetMask.getValor() seja o esperado.
+            String valorFormatado = GetMask.getValor(transferencia.getValor());
+            textValor.setText(getString(R.string.text_valor, valorFormatado));
+        }
+
     }
 
     private void configToolbar() {
@@ -219,14 +223,13 @@ public class TransferenciaConfirmaActivity extends AppCompatActivity {
         textTitulo.setText("Confirma os Dados");
     }
 
-    private void iniciaComponentes(){
+    private void iniciaComponentes() {
 
         textValor = findViewById(R.id.textValor);
         textUsuario = findViewById(R.id.textUsuario);
         imagemUsuario = findViewById(R.id.imagemUsuario);
 
     }
-
 
 
 }
