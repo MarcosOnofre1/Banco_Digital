@@ -52,9 +52,11 @@ public class MinhaContaActivity extends AppCompatActivity {
 
         iniciaComponentes();
 
+        configCliques();
+
         configDados();
 
-        configCliques();
+
 
 
     }
